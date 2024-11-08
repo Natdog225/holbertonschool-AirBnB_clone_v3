@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+^#!/usr/bin/python3
 """Index file for reasons"""
 from flask import jsonify
 from api.v1.views import app_views
