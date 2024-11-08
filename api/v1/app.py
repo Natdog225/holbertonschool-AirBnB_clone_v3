@@ -2,7 +2,6 @@
 """ Flask Application """
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
@@ -22,4 +21,6 @@ def not_found(error):
 
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=5000)
+    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(os.getenv('HBNB_API_PORT', 5000))
+    app.run(host=host, port=port, threaded=True)
