@@ -1,5 +1,9 @@
+#!/usr/bin/python3
+from os import abort
+from urllib import request
 from api.v1.views import app_views
 from models.user import User
+from flask import Flask, jsonify
 
 @app_views.route('/users', methods=['GET'])
 def get_users():
