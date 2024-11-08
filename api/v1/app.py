@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 """ Flask Application """
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
