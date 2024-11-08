@@ -1,16 +1,12 @@
-#!/usr/bin/python3
-"""
-Contains the class DBStorage
-"""
-
-import models
-from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from models.base_model import Base
+from models.user import User
+from models.state import State
 from models.city import City
+from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.state import State
-from models.user import User
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -74,3 +70,23 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """
+        Retrieve one object based on class and ID.
+        """
+        if cls in classes:
+            obj = self.__session.query(classes[cls]).filter_by(id=id).first()
+            return obj
+        return None
+
+    def count(self, cls=None):
+        """
+        Count objects in storage.
+        """
+        if cls is None:
+            return sum(len(self.__session.query(classes[clss]).all()) for clss in classes)
+        elif cls in classes:
+            return len(self.__session.query(classes[cls]).all())
+        else:
+            return 0
